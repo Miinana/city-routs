@@ -1,0 +1,36 @@
+puublic class main{
+public static void main(String[] args) {
+        Subway subway = new Subway();
+        City A = new City("A");
+        City B = new City("B");
+        City C = new City("C");
+        City D = new City("D");
+        City E = new City("E");
+        City F = new City("F");
+        Route AB = new Route(A, B, 10);
+        Route AC = new Route(A, C, 25);
+        Route AD = new Route(A, D, 20);
+        Route AF = new Route(A, F, 8);
+        Route BD = new Route(B, D, 14);
+        Route BE = new Route(B, E, 10);
+        Route CD = new Route(C, D, 5);
+        Route DE = new Route(D, E, 40);
+        Route EF = new Route(E, F, 12);
+        A.addRoute(AB);
+        A.addRoute(AC);
+        A.addRoute(AD);
+        A.addRoute(AF);
+        B.addRoute(BD);
+        B.addRoute(BE);
+        C.addRoute(CD);
+        D.addRoute(DE);
+        E.addRoute(EF);
+        subway.addCity(A);
+        subway.addCity(B);
+        subway.addCity(C);
+        subway.addCity(D);
+        subway.allPaths(A, E);
+        subway.shortestPath(A, E);
+        subway.shortestPath(A, C);
+    }
+}
