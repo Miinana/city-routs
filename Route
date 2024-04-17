@@ -1,0 +1,29 @@
+
+public class Route {
+    private int distance;
+    private City source;
+    private City destination;
+
+    public int getDistance() {
+        return this.distance;
+    }
+
+    public City getDestination() {
+        return this.destination;
+    }
+
+    public City getSource() {
+        return this.source;
+    }
+
+    public Route(City source, City destination, int distance) {
+        this.distance = distance;
+        this.source = source;
+        this.destination = destination;
+    }
+
+    public String toString() {
+        String var10000 = this.source.getName();
+        return var10000 + this.destination.getName() + " " + this.distance + " ¦¦ ";
+    }
+}
