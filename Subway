@@ -1,0 +1,103 @@
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Subway {
+    private ArrayList<City> cities = new ArrayList();
+
+    public Subway() {
+    }
+
+    public void addCity(City city) {
+        this.cities.add(city);
+    }
+
+    public void allPaths(City source, City destination) {
+        ArrayList<City> visited = new ArrayList();
+        ArrayList<Route> path = new ArrayList();
+        this.findPath(source, destination, visited, path);
+    }
+
+    public void findPath(City currentCity, City destination, ArrayList<City> visited, ArrayList<Route> path) {
+        visited.add(currentCity);
+        if (currentCity.equals(destination)) {
+            this.printPath(path);
+        } else {
+            Iterator var5 = currentCity.getRoutes().iterator();
+
+            while(var5.hasNext()) {
+                Route route = (Route)var5.next();
+                City neighbor = route.getDestination();
+                if (!visited.contains(neighbor)) {
+                    ArrayList<Route> newPath = new ArrayList(path);
+                    newPath.add(route);
+                    this.findPath(neighbor, destination, visited, newPath);
+                }
+            }
+        }
+
+        visited.remove(currentCity);
+    }
+
+    private void printPath(ArrayList<Route> path) {
+        int sumDistance = 0;
+
+        for(int i = 0; i < path.size(); ++i) {
+            Route route = (Route)path.get(i);
+            PrintStream var10000 = System.out;
+            String var10001 = route.getSource().getName();
+            var10000.print(var10001 + route.getDestination().getName() + " " + route.getDistance() + " ¦¦ ");
+            sumDistance += route.getDistance();
+        }
+
+        System.out.println("Sum Distance: " + sumDistance);
+    }
+
+    public void shortestPath(City source, City destination) {
+        ArrayList<City> visited = new ArrayList();
+        ArrayList<Route> path = new ArrayList();
+        ArrayList<Route> shortestPath = new ArrayList();
+        int[] shortestSum = new int[]{Integer.MAX_VALUE};
+        this.findShortestPath(source, destination, visited, path, shortestPath, shortestSum);
+        System.out.println("Shortest Path:");
+        this.printPath(shortestPath);
+    }
+
+    private void findShortestPath(City currentCity, City destination, ArrayList<City> visited, ArrayList<Route> path, ArrayList<Route> shortestPath, int[] shortestSum) {
+        visited.add(currentCity);
+        if (currentCity.equals(destination)) {
+            int sumDistance = this.calculateSumDistance(path);
+            if (sumDistance < shortestSum[0]) {
+                shortestSum[0] = sumDistance;
+                shortestPath.clear();
+                shortestPath.addAll(path);
+            }
+        } else {
+            Iterator var11 = currentCity.getRoutes().iterator();
+
+            while(var11.hasNext()) {
+                Route route = (Route)var11.next();
+                City neighbor = route.getDestination();
+                if (!visited.contains(neighbor)) {
+                    ArrayList<Route> newPath = new ArrayList(path);
+                    newPath.add(route);
+                    this.findShortestPath(neighbor, destination, visited, newPath, shortestPath, shortestSum);
+                }
+            }
+        }
+
+        visited.remove(currentCity);
+    }
+
+    private int calculateSumDistance(ArrayList<Route> path) {
+        int sumDistance = 0;
+
+        Route route;
+        for(Iterator var3 = path.iterator(); var3.hasNext(); sumDistance += route.getDistance()) {
+            route = (Route)var3.next();
+        }
+
+        return sumDistance;
+    }
+}
