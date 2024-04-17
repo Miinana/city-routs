@@ -1,0 +1,36 @@
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class City {
+    private String name;
+    private ArrayList<Route> routes;
+
+    public City(String name) {
+        this.name = name;
+        this.routes = new ArrayList();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public ArrayList<Route> getRoutes() {
+        return this.routes;
+    }
+
+    public void addRoute(Route route) {
+        this.routes.add(route);
+    }
+
+    public String toString() {
+        String report = this.name;
+
+        Route route;
+        for(Iterator var2 = this.routes.iterator(); var2.hasNext(); report = report + route.toString()) {
+            route = (Route)var2.next();
+        }
+
+        return report;
+    }
+}
